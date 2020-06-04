@@ -4,14 +4,17 @@ app = Flask(__name__)
 
 
 @app.route('/mail', methods=['GET', 'POST', 'PUT', 'DELETE'])
-def update():
+def mail_api():
     if request.content_type!="application/json":
-        return jsonify(error_msg="bad content type"),400
+        return make_response(400)
 
     if request.method == "GET":
+        #no lazy loading
+        #call datastore.py
         return 'Hello, World!'
 
     elif request.method == "POST":
+
         return 'Hello, World!'
 
     elif request.method == "PUT":
