@@ -1,12 +1,13 @@
 import pymssql
 from mail import Mail
+import os
 
 
 def make_connection():
-    return pymssql.connect(server='localhost',
-                           user='sa',
-                           password='Agoda1234.',
-                           database='master')
+    return pymssql.connect(server=os.environ['DB_SERVER'],
+                           user=os.environ['DB_USER'],
+                           password=os.environ['DB_PASSWORD'],
+                           database=os.environ['DB_NAME'])
 
 
 def create_mail(subject: str):

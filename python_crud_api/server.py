@@ -1,12 +1,12 @@
 from flask import Flask, request, jsonify, make_response, current_app
-import json
-
+from flask_cors import cross_origin
 from datastore import create_mail, read_all, update_mail, delete_mail
 
 app = Flask(__name__)
 
 
 @app.route('/mail', methods=['GET', 'POST', 'PUT', 'DELETE'])
+@cross_origin()
 def mail_api():
     if request.method == "GET":
         mails = read_all()
