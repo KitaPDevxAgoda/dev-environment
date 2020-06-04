@@ -13,11 +13,10 @@ def mail_api():
         mail_json = [mail.__dict__ for mail in mails]
         current_app.logger.info(mail_json)
 
-        # mocked_mail_json = json.load(current_app.open_resource('mock_store.json'))
         return jsonify(mail_json), 200
 
     if request.content_type != "application/json":
-        return make_response(400)
+        return make_response('', 400)
 
     elif request.method == "POST":
         req_data = request.get_json()
@@ -34,13 +33,13 @@ def mail_api():
         mail_subject = req_data['subject']
 
         if str_mail_id is "":
-            return make_response(400)
+            return make_response('', 400)
 
         try:
             mail_id = int(str_mail_id)
 
         except ValueError:
-            return make_response(400)
+            return make_response('', 400)
 
         update_mail(mail_id, mail_subject)
 
@@ -51,19 +50,17 @@ def mail_api():
         str_mail_id = req_data['id']
 
         if str_mail_id is "":
-            return make_response(400)
+            return make_response('', 400)
 
-        mail_id = 0
         try:
             mail_id = int(str_mail_id)
 
         except ValueError:
-            return make_response(400)
+            return make_response('', 400)
 
-        # call datastore.py
         delete_mail(mail_id)
 
-        return make_response(200)
+        return make_response('', 200)
 
     return 'Hello, World!'
 
