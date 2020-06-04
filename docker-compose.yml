@@ -1,9 +1,37 @@
 version: "3.2"
 services:
+  # ingress:
+  #   image: nginx
+  #   container_name: ingress
+  #   volumes:
+  #     - ./nginxconf/:/etc/nginx/conf.d/
+  #   ports:
+  #     - 8080:8080
+  #   depends_on:
+  #     - request-api
+  frontend:
+    build:  ./frontend
+    ports: 
+      - 80:80
+  api:
+    # container_name: dev-environment-api
+    build: ./python_crud_api
+    ports:
+      - 5000:5000
+    expose: 
+      - 5000
+    environment:
+      - DB_SERVER=db
+      - DB_USER=SA
+      - DB_PASSWORD=Agoda1234.
+      - DB_NAME=master
+    depends_on:
+      - db
 
-  sql-server-db:
-    container_name: dev-environment-mssql-server
-    image: microsoft/mssql-server-linux:latest
+  db:
+    # container_name: dev-environment-db
+    build: ./database/scripts
+    # image: microsoft/mssql-server-linux:latest
     ports:
       - "1433:1433"
     environment:

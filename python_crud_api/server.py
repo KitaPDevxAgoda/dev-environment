@@ -15,13 +15,8 @@ def mail_api():
 
         return jsonify(mail_json), 200
 
-<<<<<<< HEAD
     # if request.content_type != "application/json":
     #     return make_response('',400)
-=======
-    if request.content_type != "application/json":
-        return make_response('', 400)
->>>>>>> 7c08f8986bef075acadeaaa538b5803de7bc8b40
 
     elif request.method == "POST":
         req_data = request.get_json()
@@ -78,4 +73,4 @@ def delete_api():
 
 
 if __name__ == '__main__':
-    app.run(debug=True)
+    app.run(host='0.0.0.0',debug=True)

@@ -17,7 +17,6 @@ mccabe==0.6.1
 pipenv==2020.6.2
 pylint==2.5.2
 pymssql==2.1.4
-pyodbc==4.0.30
 six==1.15.0
 toml==0.10.1
 typed-ast==1.4.1
