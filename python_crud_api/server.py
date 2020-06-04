@@ -1,5 +1,5 @@
-from flask import Flask, request, jsonify, make_response
-
+from flask import Flask, request, jsonify, make_response,current_app
+import json
 app = Flask(__name__)
 
 
@@ -12,11 +12,15 @@ def mail_api():
     if request.method == "GET":
         #no lazy loading
         #call datastore.py
-        return 'Hello, World!'
+        mail_json=json.load(current_app.open_resource('mock_store.json'))
+        return jsonify(mail_json),200
 
     elif request.method == "POST":
+        req_data = request.get_json()
+        subject=req_data['subject']
+        #call datastore.py
 
-        return 'Hello, World!'
+        return make_response(200)
 
     elif request.method == "PUT":
         req_data = request.get_json()
