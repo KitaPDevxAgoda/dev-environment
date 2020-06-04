@@ -24,7 +24,9 @@ def mail_api():
     elif request.method == "POST":
         req_data = request.get_json()
         subject = req_data['subject']
+
         #call datastore.py
+        create_mail(subject)
 
         return make_response(200)
 
@@ -44,12 +46,29 @@ def mail_api():
         except ValueError:
             return make_response(400)
 
+        # call datastore.py
+        update_mail(mail_id, mail_subject)
 
-
-        return 'Hello, World!'
+        return make_response(200)
 
     elif request.method == "DELETE":
-        return 'Hello, World!'
+        req_data = request.get_json()
+        str_mail_id = req_data['id']
+
+        if str_mail_id is "":
+            return make_response(400)
+
+        mail_id = 0
+        try:
+            mail_id = int(str_mail_id)
+
+        except ValueError:
+            return make_response(400)
+
+        # call datastore.py
+        delete_mail(mail_id)
+
+        return make_response(200)
 
     return 'Hello, World!'
 
