@@ -1,19 +1,23 @@
 from flask import Flask, request, jsonify, make_response,current_app
 import json
+
+from datastore import create_maill, read_all, update_all, delete_mail
+
 app = Flask(__name__)
 
 
 @app.route('/mail', methods=['GET', 'POST', 'PUT', 'DELETE'])
 def mail_api():
 
-    if request.content_type!="application/json":
-        return make_response(400)
-
     if request.method == "GET":
         #no lazy loading
+        mail_json=read_all
         #call datastore.py
         mail_json=json.load(current_app.open_resource('mock_store.json'))
         return jsonify(mail_json),200
+
+    if request.content_type!="application/json":
+        return make_response(400)
 
     elif request.method == "POST":
         req_data = request.get_json()
