@@ -14,7 +14,7 @@ def create_mail(subject: str):
     conn = make_connection()
     cursor = conn.cursor()
 
-    cursor.execute("INSERT INTO tempdb.dbo.MAIL (mai_subject) VALUES (%s);", subject)
+    cursor.execute("INSERT INTO master.dbo.MAIL (mai_subject) VALUES (%s);", subject)
     cursor.close()
     conn.commit()
     conn.close()
@@ -24,7 +24,7 @@ def read_all():
     conn = make_connection()
 
     cursor = conn.cursor()
-    cursor.execute("SELECT mai_id, mai_subject FROM tempdb.dbo.MAIL;")
+    cursor.execute("SELECT mai_id, mai_subject FROM master.dbo.MAIL;")
 
     mails = []
 
@@ -46,7 +46,7 @@ def update_mail(id: int, subject: str):
     conn = make_connection()
     cursor = conn.cursor()
 
-    cursor.execute("UPDATE tempdb.dbo.MAIL SET mai_subject = %s WHERE mai_id = %d", (subject, id))
+    cursor.execute("UPDATE master.dbo.MAIL SET mai_subject = %s WHERE mai_id = %d", (subject, id))
     cursor.close()
     conn.commit()
     conn.close()
@@ -56,7 +56,7 @@ def delete_mail(id: int):
     conn = make_connection()
     cursor = conn.cursor()
 
-    sql = ("DELETE FROM tempdb.dbo.MAIL WHERE mai_id = %d" % id)
+    sql = ("DELETE FROM master.dbo.MAIL WHERE mai_id = %d" % id)
 
     cursor.execute(sql)
     cursor.close()
