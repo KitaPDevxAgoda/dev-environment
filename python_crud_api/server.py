@@ -4,9 +4,9 @@ app = Flask(__name__)
 
 
 @app.route('/mail', methods=['GET', 'POST', 'PUT', 'DELETE'])
-def update():
-    if request.content_type!="application/json":
-        return jsonify(error_msg="bad content type"),400
+def mail_api():
+    if request.content_type != "application/json":
+        return jsonify(error_msg="bad content type"), 400
 
     if request.method == "GET":
         return 'Hello, World!'
