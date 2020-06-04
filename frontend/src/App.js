@@ -10,8 +10,9 @@ function App() {
     setData(await fetchMail())
   }
 
-  async function handleUpdate(id, subject) {
+  async function handleUpdate(subject, id) {
     // const response = await updateMail(id, subject);
+    console.log(id, subject)
     const response = ""
 
     fetchData()
@@ -22,11 +23,12 @@ function App() {
     await fetchData()
   }
 
-  // async function onClickCreate(subject) {
-  //   const response = ""
+  async function handleCreate() {
+    var subject = window.prompt("subject", "subject")
+    const response = ""
 
-  //   fetchData()
-  // }
+    fetchData()
+  }
 
   useEffect(() => {
     fetchData()
@@ -41,7 +43,6 @@ function App() {
           <tr>
             <th scope="col">#</th>
             <th scope="col">Subject</th>
-            <th scope="col">Update</th>
             <th scope="col">Delete</th>
           </tr>
         </thead>
@@ -51,7 +52,10 @@ function App() {
               <tr key={Math.random()}>
                 <th scope="row">{id}</th>
                 <td>
-                  <EditableLabel text={subject} />
+                  <EditableLabel
+                    text={subject}
+                    onFocusOut={(subject) => handleUpdate(subject, id)}
+                  />
                 </td>
                 <td>
                   <button onClick={() => handleDelete(id)}>Delete</button>
@@ -61,7 +65,7 @@ function App() {
           })}
         </tbody>
       </table>
-      {/* <button onClick={onClickCreate}>Create</button> */}
+      <button onClick={handleCreate}>Create</button>
     </div>
   )
 }
