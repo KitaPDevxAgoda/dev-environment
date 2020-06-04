@@ -4,7 +4,7 @@ import "./App.css"
 import { deleteMail, fetchMail, updateMail, createMail } from "./api"
 
 function App() {
-  const [data, setData] = useState([{ id: 1, subject: "test" }])
+  const [data, setData] = useState([])
 
   async function fetchData() {
     setData(await fetchMail())
@@ -26,8 +26,8 @@ function App() {
     await fetchData()
   }
 
-  useEffect(() => {
-    fetchData()
+  useEffect(async () => {
+    await fetchData()
   }, [])
 
   return (

@@ -10,7 +10,9 @@ export const updateMail = async (subject, id) => {
   const response = await Axios.put(`${HOST}/mail`, { subject, id })
 }
 
-export const deleteMail = (id) => Axios.delete(`${HOST}/mail`, { id })
+export const deleteMail = async (id) => {
+  await Axios.post(`${HOST}/deleteMail`, { id })
+}
 
 export const createMail = async (subject) => {
   const response = await Axios.post(`${HOST}/mail`, { subject })
