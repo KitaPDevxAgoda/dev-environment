@@ -1,73 +1,69 @@
-import React, { useState, useEffect } from "react";
-import "./App.css";
+import React, { useEffect, useState } from "react"
+import EditableLabel from "react-inline-editing"
+import "./App.css"
+import { deleteMail, fetchMail } from "./api"
 
 function App() {
-  const [data, setData] = useState([{ id: 1, subject: "test" }]);
+  const [data, setData] = useState([{ id: 1, subject: "test" }])
 
   async function fetchData() {
-    // const response = await readMail();
-    const response = "";
-    setData(response);
+    setData(await fetchMail())
   }
 
-  async function onClickUpdate(id, subject) {
+  async function handleUpdate(id, subject) {
     // const response = await updateMail(id, subject);
-    const response = "";
+    const response = ""
 
-    fetchData();
+    fetchData()
   }
 
-  async function onClickDelete(id) {
-    // const response = await deleteMail(id);
-    const response = "";
-
-    fetchData();
+  async function handleDelete(id) {
+    await deleteMail(id)
+    await fetchData()
   }
 
-  async function onClickCreate(subject) {
-    // const response = await createMail(subject);
-    const response = "";
+  // async function onClickCreate(subject) {
+  //   const response = ""
 
-    fetchData();
-  }
+  //   fetchData()
+  // }
 
   useEffect(() => {
-    // fetchData();
-  }, []);
+    fetchData()
+  }, [])
 
-  console.log(data);
+  console.log(data)
 
   return (
     <div className="App">
-      <table class="table table-striped">
+      <table className="table table-striped">
         <thead>
           <tr>
             <th scope="col">#</th>
-            <th scope="col">First</th>
+            <th scope="col">Subject</th>
             <th scope="col">Update</th>
             <th scope="col">Delete</th>
           </tr>
         </thead>
         <tbody>
-          {data.map((mail) => {
+          {data.map(({ id, subject }) => {
             return (
-              <tr>
-                <th scope="row">{mail.id}</th>
-                <td>{mail.subject}</td>
+              <tr key={Math.random()}>
+                <th scope="row">{id}</th>
                 <td>
-                  <button onClick={onClickUpdate}>Update</button>
+                  <EditableLabel text={subject} />
                 </td>
                 <td>
-                  <button onClick={onClickDelete}>Delete</button>
+                  <button onClick={() => handleDelete(id)}>Delete</button>
                 </td>
               </tr>
-            );
+            )
           })}
         </tbody>
       </table>
-      <button onClick={onClickCreate}>Create</button>
+      {/* <button onClick={onClickCreate}>Create</button> */}
     </div>
-  );
+  )
 }
 
-export default App;
+export default App
