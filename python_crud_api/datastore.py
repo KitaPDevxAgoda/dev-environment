@@ -38,6 +38,7 @@ def read_all():
             mails.append(mail)
 
     cursor.close()
+    conn.commit()
     conn.close()
     return mails
 
@@ -60,4 +61,5 @@ def delete_mail(id: int):
 
     cursor.execute(sql)
     cursor.close()
+    conn.commit()
     conn.close()

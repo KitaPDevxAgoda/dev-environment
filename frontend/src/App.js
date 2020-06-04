@@ -1,20 +1,18 @@
 import React, { useEffect, useState } from "react"
 import EditableLabel from "react-inline-editing"
 import "./App.css"
-import { deleteMail, fetchMail } from "./api"
+import { deleteMail, fetchMail, updateMail, createMail } from "./api"
 
 function App() {
-  const [data, setData] = useState([{ id: 1, subject: "test" }])
+  const [data, setData] = useState([])
 
   async function fetchData() {
     setData(await fetchMail())
   }
 
-  async function handleUpdate(id, subject) {
-    // const response = await updateMail(id, subject);
-    const response = ""
-
-    fetchData()
+  async function handleUpdate(subject, id) {
+    await updateMail(subject, id)
+    await fetchData()
   }
 
   async function handleDelete(id) {
@@ -22,17 +20,15 @@ function App() {
     await fetchData()
   }
 
-  // async function onClickCreate(subject) {
-  //   const response = ""
+  async function handleCreate() {
+    var subject = window.prompt("subject", "subject")
+    await createMail(subject)
+    await fetchData()
+  }
 
-  //   fetchData()
-  // }
-
-  useEffect(() => {
-    fetchData()
+  useEffect(async () => {
+    await fetchData()
   }, [])
-
-  console.log(data)
 
   return (
     <div className="App">
@@ -41,7 +37,6 @@ function App() {
           <tr>
             <th scope="col">#</th>
             <th scope="col">Subject</th>
-            <th scope="col">Update</th>
             <th scope="col">Delete</th>
           </tr>
         </thead>
@@ -51,7 +46,10 @@ function App() {
               <tr key={Math.random()}>
                 <th scope="row">{id}</th>
                 <td>
-                  <EditableLabel text={subject} />
+                  <EditableLabel
+                    text={subject}
+                    onFocusOut={(subject) => handleUpdate(subject, id)}
+                  />
                 </td>
                 <td>
                   <button onClick={() => handleDelete(id)}>Delete</button>
@@ -61,7 +59,7 @@ function App() {
           })}
         </tbody>
       </table>
-      {/* <button onClick={onClickCreate}>Create</button> */}
+      <button onClick={handleCreate}>Create</button>
     </div>
   )
 }
