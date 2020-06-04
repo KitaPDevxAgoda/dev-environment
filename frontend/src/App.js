@@ -1,7 +1,7 @@
 import React, { useEffect, useState } from "react"
 import EditableLabel from "react-inline-editing"
 import "./App.css"
-import { deleteMail, fetchMail } from "./api"
+import { deleteMail, fetchMail, updateMail, createMail } from "./api"
 
 function App() {
   const [data, setData] = useState([{ id: 1, subject: "test" }])
@@ -11,11 +11,8 @@ function App() {
   }
 
   async function handleUpdate(subject, id) {
-    // const response = await updateMail(id, subject);
-    console.log(id, subject)
-    const response = ""
-
-    fetchData()
+    await updateMail(subject, id)
+    await fetchData()
   }
 
   async function handleDelete(id) {
@@ -25,16 +22,13 @@ function App() {
 
   async function handleCreate() {
     var subject = window.prompt("subject", "subject")
-    const response = ""
-
-    fetchData()
+    await createMail(subject)
+    await fetchData()
   }
 
   useEffect(() => {
     fetchData()
   }, [])
-
-  console.log(data)
 
   return (
     <div className="App">
