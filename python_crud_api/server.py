@@ -12,6 +12,23 @@ def update():
         return 'Hello, World!'
 
     elif request.method == "PUT":
+        req_data = request.get_json()
+
+        str_mail_id = req_data['id']
+        mail_subject = req_data['subject']
+
+        if str_mail_id is "":
+            return make_response(400)
+
+        mail_id = 0
+        try:
+            mail_id = int(str_mail_id)
+
+        except ValueError:
+            return make_response(400)
+
+
+
         return 'Hello, World!'
 
     elif request.method == "DELETE":
